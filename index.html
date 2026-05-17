@@ -7,6 +7,28 @@
     <title>party-room-app</title>
   </head>
   <body>
+    <!-- 1. Add name and data-netlify="true" to the form tag -->
+<form name="booking-form" method="POST" data-netlify="true">
+  
+  <!-- 2. Ensure every single input has a clear 'name' attribute -->
+  <input type="text" name="admin_customer_name" id="name" required />
+  <input type="email" name="admin_customer_email" id="email" required />
+  <input type="tel" name="admin_phone" id="phone" required />
+  <input type="date" name="admin_event_date" id="date" required />
+  
+  <select name="admin_selected_package" id="package">
+    <option value="basic">Basic Package</option>
+  </select>
+
+  <input type="number" name="admin_guest_count" id="guests" />
+
+  <!-- 3. Checkboxes must share the same name with an empty bracket [] to send multiple values -->
+  <input type="checkbox" name="admin_time_slots[]" value="10:00 AM - 11:30 AM" />
+  <input type="checkbox" name="admin_time_slots[]" value="11:30 AM - 1:00 PM" />
+
+  <button type="submit">Confirm My Booking</button>
+</form>
+
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
