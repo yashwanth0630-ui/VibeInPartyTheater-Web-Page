@@ -1,9 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import "./App.css";
-import emailjs from '@emailjs/browser';
 
-// Initialize EmailJS with Public Key
-emailjs.init('RUyIJ-pqMIKXypM2F');
 import heroVideo from "../LoopingVideoVibeInParty.mp4";
 
 const NAV_LINKS = ["Experience", "Packages", "How It Works", "Testimonials", "Team", "FAQs"];
@@ -336,26 +333,30 @@ function BookingCTA() {
       slots: checked ? [...f.slots, value] : f.slots.filter(s => s !== value)
     }));
   };
-  const submit = (e) => {
+  const handleNetlifySubmit = (e) => {
     e.preventDefault();
     
-    const templateParams = {
-      user_name: form.name,
-      user_email: form.email,
-      user_phone: form.phone,
-      event_date: form.date,
-      package: form.pkg,
-      guests: form.guests,
-      selected_slots: form.slots.join(', ') || 'No slots selected',
-      time: new Date().toLocaleString()
+    const encode = (data) => {
+      return Object.keys(data)
+        .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+        .join("&");
     };
 
-    emailjs.send('service_mfl9j39', 'template_pfps24e', templateParams, 'RUyIJ-pqMIKXypM2F')
-      .then((result) => {
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: encode({ 
+        "form-name": "booking", 
+        ...form,
+        slots: form.slots.join(', ') || 'No slots selected'
+      })
+    })
+      .then(() => {
         alert('Booking request sent successfully!');
         setSubmitted(true);
-      }, (error) => {
-        console.error('Email delivery failed:', error);
+      })
+      .catch((error) => {
+        console.error('Netlify Form submission failed:', error);
         alert('Failed to send request. Please try again.');
       });
   };
@@ -379,7 +380,17 @@ function BookingCTA() {
                 <p>Our team will call you within 2 hours to confirm your party room. Get ready to celebrate!</p>
               </div>
             ) : (
-              <form className="booking__form" onSubmit={submit}>
+              <form 
+                className="booking__form" 
+                onSubmit={handleNetlifySubmit}
+                name="booking"
+                data-netlify="true"
+                netlify-honeypot="bot-field"
+              >
+                <input type="hidden" name="form-name" value="booking" />
+                <p hidden>
+                  <label>Don’t fill this out if you’re human: <input name="bot-field" /></label>
+                </p>
                 <div className="form-group">
                   <label>Your Name</label>
                   <input name="name" value={form.name} onChange={handle} placeholder="Priya Sharma" required />

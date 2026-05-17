@@ -11,7 +11,7 @@ India's most vibrant party room booking platform, located near Medipally, Hydera
 - **Themed Rooms:** Neon Lounge, Royal Ballroom, Midnight Club, and Garden Suite.
 - **Features:** Programmable LED shows, DJ-grade sound systems, and Insta-worthy décor.
 - **Packages:** Tiered pricing (Basic, Deluxe, VIP) with integrated booking.
-- **Booking System:** Real-time slot selection and automated request handling via EmailJS.
+- **Booking System:** Real-time slot selection and automated request handling via Netlify Forms.
 
 ### 2. Neerala's Kitchen 🍽️
 A premium catering service bringing home-style warmth to every table.
@@ -27,7 +27,7 @@ A premium catering service bringing home-style warmth to every table.
 - **Build Tool:** Vite
 - **Styling:** Vanilla CSS (Custom properties, Flexbox/Grid, Keyframe animations)
 - **Integrations:** 
-  - **EmailJS:** For handling booking inquiries without a dedicated backend.
+  - **Netlify Forms:** For handling booking inquiries without a dedicated backend.
   - **Google Maps API:** For location services.
   - **Intersection Observer API:** For scroll-triggered animations.
 

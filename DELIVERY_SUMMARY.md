@@ -201,7 +201,7 @@ All content is **easy to edit** - just update the arrays in the JSX files.
 - [ ] Update navigation links
 
 ### Advanced (1+ hour each)
-- [ ] Add contact form (EmailJS ready)
+- [ ] Add contact form (Netlify Forms ready)
 - [ ] Integrate with backend
 - [ ] Add more pages
 - [ ] Implement booking system

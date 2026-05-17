@@ -348,7 +348,7 @@ partyroom.com
 - Per-brand: hero, menu, 6 services, 6 reviews
 
 ### V1.5 (Easy Additions)
-- [ ] Contact forms (EmailJS)
+- [ ] Contact forms (Netlify Forms)
 - [ ] Image galleries
 - [ ] Testimonial videos
 - [ ] Google Maps integration

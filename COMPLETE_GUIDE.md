@@ -548,7 +548,7 @@ Your site is ready when:
 ## 🚀 Next Level Features
 
 Ready to add more? Consider:
-- [ ] Email contact forms (EmailJS ready)
+- [ ] Email contact forms (Netlify Forms ready)
 - [ ] Image gallery/carousel
 - [ ] Online booking system
 - [ ] Blog section
