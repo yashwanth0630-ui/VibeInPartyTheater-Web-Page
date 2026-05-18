@@ -334,7 +334,7 @@ function FAQs() {
 
 function BookingCTA() {
   const [ref, inView] = useInView();
-  const [form, setForm] = useState({ from_name: "", from_email: "", phone: "", date: "", package: "", guests: "", slots: [] });
+  const [form, setForm] = useState({ user_name: "", user_email: "", user_phone: "", event_date: "", package: "", guests: "", slots: [] });
   const [submitted, setSubmitted] = useState(false);
   const [isSending, setIsSending] = useState(false);
 
@@ -350,7 +350,7 @@ function BookingCTA() {
   const handleEmailJSSubmit = (e) => {
     e.preventDefault();
     
-    if (!form.from_email) {
+    if (!form.user_email) {
       alert("Please enter a valid email address.");
       return;
     }
@@ -358,15 +358,20 @@ function BookingCTA() {
     setIsSending(true);
 
     const templateParams = {
-      ...form,
-      slots: form.slots.join(', ') || 'No slots selected',
-      to_email: 'Vikasneralla1402@gmail.com'
+      user_name: form.user_name,
+      user_email: form.user_email,
+      user_phone: form.user_phone,
+      event_date: form.event_date,
+      package: form.package,
+      guests: form.guests,
+      selected_slots: form.slots.join(', ') || 'No slots selected',
+      time: new Date().toLocaleString(),
+      message: 'New booking request from website'
     };
 
     console.log('--- EmailJS Debug Info ---');
-    console.log('Check your EmailJS template. These keys must match exactly:');
-    console.log('{{from_name}}, {{from_email}}, {{phone}}, {{date}}, {{package}}, {{guests}}, {{slots}}');
-    console.log('Current Data:', templateParams);
+    console.log('Matches your EmailJS HTML template exactly:');
+    console.log('Data:', templateParams);
 
     // EmailJS credentials updated with user provided values
     const SERVICE_ID = 'service_mfl9j39'; 
@@ -414,19 +419,19 @@ function BookingCTA() {
               >
                 <div className="form-group">
                   <label>Your Name</label>
-                  <input name="from_name" value={form.from_name} onChange={handle} placeholder="Priya Sharma" required />
+                  <input name="user_name" value={form.user_name} onChange={handle} placeholder="Priya Sharma" required />
                 </div>
                 <div className="form-group">
                   <label>Email Address</label>
-                  <input type="email" name="from_email" value={form.from_email} onChange={handle} placeholder="priya@example.com" required />
+                  <input type="email" name="user_email" value={form.user_email} onChange={handle} placeholder="priya@example.com" required />
                 </div>
                 <div className="form-group">
                   <label>Phone Number</label>
-                  <input name="phone" value={form.phone} onChange={handle} placeholder="+91 89774 41149" required />
+                  <input name="user_phone" value={form.user_phone} onChange={handle} placeholder="+91 89774 41149" required />
                 </div>
                 <div className="form-group">
                   <label>Event Date</label>
-                  <input type="date" name="date" value={form.date} onChange={handle} required />
+                  <input type="date" name="event_date" value={form.event_date} onChange={handle} required />
                 </div>
                 <div className="form-group">
                   <label>Package</label>
