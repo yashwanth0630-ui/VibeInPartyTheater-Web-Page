@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>party-room-app</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- Hidden form for Netlify to detect -->
+    <form name="booking" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="date" name="date" />
+      <input type="text" name="pkg" />
+      <input type="text" name="guests" />
+      <textarea name="slots"></textarea>
+      <input name="bot-field" />
+    </form>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
