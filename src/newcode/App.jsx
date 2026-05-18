@@ -463,7 +463,6 @@ function Footer() {
           <div className="footer__contact">
             <h4>Contact Us</h4>
             <p>📞 +91 89774 41149</p>
-            <p>📞 +91 77996 65199</p>
             <p>📧 Vikasneralla1402@gmail.com</p>
             <p>📍 Downtown City Center, Hyderabad</p>
           </div>

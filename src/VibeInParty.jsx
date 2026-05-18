@@ -374,10 +374,9 @@ function BookingCTA() {
     console.log('Data:', templateParams);
 
     // EmailJS credentials updated with user provided values
-    const SERVICE_ID = 'service_mfl9j39'; 
-    const TEMPLATE_ID = 'template_iee2pni';
-    const PUBLIC_KEY = 'RUyIJ-pqMIKXypM2F';
-
+    const SERVICE_ID = 'service_z9gwrh3';
+    const TEMPLATE_ID = 'template_h2vi3ef';
+    const PUBLIC_KEY = 'MZ2Zb4vkve8fLkm0C';
     emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
       .then((response) => {
         console.log('SUCCESS!', response.status, response.text);
