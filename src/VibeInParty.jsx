@@ -328,10 +328,16 @@ function FAQs() {
   );
 }
 
+import emailjs from '@emailjs/browser';
+
+// ... (existing constants)
+
 function BookingCTA() {
   const [ref, inView] = useInView();
   const [form, setForm] = useState({ name: "", email: "", phone: "", date: "", pkg: "", guests: "", slots: [] });
   const [submitted, setSubmitted] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+
   const handle = (e) => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
   const handleSlots = (e) => {
     const { value, checked } = e.target;
@@ -340,7 +346,8 @@ function BookingCTA() {
       slots: checked ? [...f.slots, value] : f.slots.filter(s => s !== value)
     }));
   };
-  const handleNetlifySubmit = (e) => {
+
+  const handleEmailJSSubmit = (e) => {
     e.preventDefault();
     
     if (!form.email) {
@@ -348,30 +355,39 @@ function BookingCTA() {
       return;
     }
 
-    const encode = (data) => {
-      return Object.keys(data)
-        .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
-        .join("&");
+    setIsSending(true);
+
+    const templateParams = {
+      from_name: form.name,
+      from_email: form.email,
+      phone: form.phone,
+      date: form.date,
+      package: form.pkg,
+      guests: form.guests,
+      slots: form.slots.join(', ') || 'No slots selected',
+      to_email: 'Vikasneralla1402@gmail.com'
     };
 
-    fetch("/", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: encode({ 
-        "form-name": "booking", 
-        ...form,
-        slots: form.slots.join(', ') || 'No slots selected'
-      })
-    })
-      .then(() => {
-        alert('Booking request sent successfully!');
+    // NOTE: You need to replace these with your actual EmailJS IDs from your dashboard
+    const SERVICE_ID = 'service_vibe_in_party'; 
+    const TEMPLATE_ID = 'template_booking_request';
+    const PUBLIC_KEY = 'YOUR_EMAILJS_PUBLIC_KEY';
+
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
+      .then((response) => {
+        console.log('SUCCESS!', response.status, response.text);
+        alert('Booking request sent successfully via email!');
         setSubmitted(true);
       })
-      .catch((error) => {
-        console.error('Netlify Form submission failed:', error);
-        alert('Failed to send request. Please try again.');
+      .catch((err) => {
+        console.error('FAILED...', err);
+        alert('Failed to send request. Please check your EmailJS configuration or internet connection.');
+      })
+      .finally(() => {
+        setIsSending(false);
       });
   };
+
   return (
     <section className="section booking" id="book" ref={ref}>
       <div className={`container fade-up ${inView ? "fade-up--visible" : ""}`}>
@@ -394,15 +410,8 @@ function BookingCTA() {
             ) : (
               <form 
                 className="booking__form" 
-                onSubmit={handleNetlifySubmit}
-                name="booking"
-                data-netlify="true"
-                netlify-honeypot="bot-field"
+                onSubmit={handleEmailJSSubmit}
               >
-                <input type="hidden" name="form-name" value="booking" />
-                <p hidden>
-                  <label>Don’t fill this out if you’re human: <input name="bot-field" /></label>
-                </p>
                 <div className="form-group">
                   <label>Your Name</label>
                   <input name="name" value={form.name} onChange={handle} placeholder="Priya Sharma" required />
@@ -454,7 +463,9 @@ function BookingCTA() {
                     })}
                   </div>
                 </div>
-                <button type="submit" className="btn btn--primary btn--full">Confirm My Booking 🎊</button>
+                <button type="submit" className="btn btn--primary btn--full" disabled={isSending}>
+                  {isSending ? 'Sending...' : 'Confirm My Booking 🎊'}
+                </button>
               </form>
             )}
           </div>
