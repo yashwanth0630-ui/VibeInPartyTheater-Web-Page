@@ -368,10 +368,10 @@ function BookingCTA() {
       to_email: 'Vikasneralla1402@gmail.com'
     };
 
-    // NOTE: You need to replace these with your actual EmailJS IDs from your dashboard
-    const SERVICE_ID = 'service_vibe_in_party'; 
-    const TEMPLATE_ID = 'template_booking_request';
-    const PUBLIC_KEY = 'YOUR_EMAILJS_PUBLIC_KEY';
+    // EmailJS credentials updated with user provided values
+    const SERVICE_ID = 'service_mfl9j39'; 
+    const TEMPLATE_ID = 'template_iee2pni';
+    const PUBLIC_KEY = 'RUyIJ-pqMIKXypM2F';
 
     emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
       .then((response) => {
