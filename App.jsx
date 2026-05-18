@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import "./App.css";
+
 import heroVideo from "../LoopingVideoVibeInParty.mp4";
 
 const NAV_LINKS = ["Experience", "Packages", "How It Works", "Testimonials", "Team", "FAQs"];
@@ -93,7 +94,7 @@ function useInView(threshold = 0.12) {
     const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setInView(true); }, { threshold });
     if (ref.current) obs.observe(ref.current);
     return () => obs.disconnect();
-  }, []);
+  }, [threshold]);
   return [ref, inView];
 }
 
@@ -322,7 +323,7 @@ function FAQs() {
 
 function BookingCTA() {
   const [ref, inView] = useInView();
-  const [form, setForm] = useState({ name: "", phone: "", date: "", pkg: "", guests: "", slots: [] });
+  const [form, setForm] = useState({ name: "", email: "", phone: "", date: "", pkg: "", guests: "", slots: [] });
   const [submitted, setSubmitted] = useState(false);
   const handle = (e) => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
   const handleSlots = (e) => {
@@ -393,6 +394,10 @@ function BookingCTA() {
                 <div className="form-group">
                   <label>Your Name</label>
                   <input name="name" value={form.name} onChange={handle} placeholder="Priya Sharma" required />
+                </div>
+                <div className="form-group">
+                  <label>Email Address</label>
+                  <input type="email" name="email" value={form.email} onChange={handle} placeholder="priya@example.com" required />
                 </div>
                 <div className="form-group">
                   <label>Phone Number</label>
