@@ -334,7 +334,7 @@ function FAQs() {
 
 function BookingCTA() {
   const [ref, inView] = useInView();
-  const [form, setForm] = useState({ name: "", email: "", phone: "", date: "", pkg: "", guests: "", slots: [] });
+  const [form, setForm] = useState({ from_name: "", from_email: "", phone: "", date: "", package: "", guests: "", slots: [] });
   const [submitted, setSubmitted] = useState(false);
   const [isSending, setIsSending] = useState(false);
 
@@ -350,7 +350,7 @@ function BookingCTA() {
   const handleEmailJSSubmit = (e) => {
     e.preventDefault();
     
-    if (!form.email) {
+    if (!form.from_email) {
       alert("Please enter a valid email address.");
       return;
     }
@@ -358,17 +358,15 @@ function BookingCTA() {
     setIsSending(true);
 
     const templateParams = {
-      from_name: form.name,
-      from_email: form.email,
-      phone: form.phone,
-      date: form.date,
-      package: form.pkg,
-      guests: form.guests,
+      ...form,
       slots: form.slots.join(', ') || 'No slots selected',
       to_email: 'Vikasneralla1402@gmail.com'
     };
 
-    console.log('Sending EmailJS with params:', templateParams);
+    console.log('--- EmailJS Debug Info ---');
+    console.log('Check your EmailJS template. These keys must match exactly:');
+    console.log('{{from_name}}, {{from_email}}, {{phone}}, {{date}}, {{package}}, {{guests}}, {{slots}}');
+    console.log('Current Data:', templateParams);
 
     // EmailJS credentials updated with user provided values
     const SERVICE_ID = 'service_mfl9j39'; 
@@ -416,11 +414,11 @@ function BookingCTA() {
               >
                 <div className="form-group">
                   <label>Your Name</label>
-                  <input name="name" value={form.name} onChange={handle} placeholder="Priya Sharma" required />
+                  <input name="from_name" value={form.from_name} onChange={handle} placeholder="Priya Sharma" required />
                 </div>
                 <div className="form-group">
                   <label>Email Address</label>
-                  <input type="email" name="email" value={form.email} onChange={handle} placeholder="priya@example.com" required />
+                  <input type="email" name="from_email" value={form.from_email} onChange={handle} placeholder="priya@example.com" required />
                 </div>
                 <div className="form-group">
                   <label>Phone Number</label>
@@ -432,7 +430,7 @@ function BookingCTA() {
                 </div>
                 <div className="form-group">
                   <label>Package</label>
-                  <select name="pkg" value={form.pkg} onChange={handle} required>
+                  <select name="package" value={form.package} onChange={handle} required>
                     <option value="">Select a package</option>
                     {PACKAGES.map(p => <option key={p.name} value={p.name}>{p.emoji} {p.name} — {p.price}</option>)}
                   </select>
