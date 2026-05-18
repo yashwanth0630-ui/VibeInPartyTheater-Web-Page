@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import emailjs from '@emailjs/browser';
 import "./VibeInParty.css";
 import VideoCard from "./VideoCard";
 const heroVideo = "/LoopingVideoVibeInParty.mp4";
@@ -328,7 +329,6 @@ function FAQs() {
   );
 }
 
-import emailjs from '@emailjs/browser';
 
 // ... (existing constants)
 
@@ -367,6 +367,8 @@ function BookingCTA() {
       slots: form.slots.join(', ') || 'No slots selected',
       to_email: 'Vikasneralla1402@gmail.com'
     };
+
+    console.log('Sending EmailJS with params:', templateParams);
 
     // EmailJS credentials updated with user provided values
     const SERVICE_ID = 'service_mfl9j39'; 
